@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="CollitaDAOServidor" transaction-type="RESOURCE_LOCAL">
+    	<class>com.fedesoft.collitaservidor.model.Comprador</class>
+    	<class>com.fedesoft.collitaservidor.model.Camion</class>
+    	<class>com.fedesoft.collitaservidor.model.Cuadrilla</class>
+    	<class>com.fedesoft.collitaservidor.model.OrdenCollita</class>
+    	<class>com.fedesoft.collitaservidor.model.Terme</class>
+    	<class>com.fedesoft.collitaservidor.model.Variedad</class>
+    	<properties>
+    		<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/collita"/>
+    		<property name="javax.persistence.jdbc.user" value="collita"/>
+    		<property name="javax.persistence.jdbc.password" value="collita"/>
+    		<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+    		<property name="eclipselink.ddl-generation" value="create-tables"/>
+    	</properties></persistence-unit>    
+</persistence>
