@@ -24,9 +24,7 @@ public interface CollitaDAOIfc {
 	public abstract void guardarCuadrilla(Cuadrilla cuadrilla)
 			throws CuadrillaYaExisteException;
 
-	public abstract List<Cuadrilla> recuperarCuadrillas(Boolean activas);
-
-	public abstract List<Cuadrilla> buscarCuadrillasPorNombre(String nombre);
+	public abstract List<Cuadrilla> recuperarCuadrillas(Boolean activas);	
 	
 	public abstract Cuadrilla buscarCuadrillaPorNombre(String nombre);
 

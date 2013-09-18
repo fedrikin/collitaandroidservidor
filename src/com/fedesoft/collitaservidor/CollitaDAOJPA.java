@@ -35,7 +35,8 @@ public class CollitaDAOJPA implements CollitaDAOIfc {
 
 	@Override
 	public void actualizarCuadrilla(Cuadrilla cuadrilla) {
-		// TODO Auto-generated method stub
+		em.refresh(cuadrilla);
+		
 
 	}
 
@@ -55,20 +56,19 @@ public class CollitaDAOJPA implements CollitaDAOIfc {
 		Query q=em.createQuery("Select c From Cuadrilla c Where c.activa=true");	
 		List<Cuadrilla> resultList = q.getResultList();
 		return resultList;
-	}
-
-	@Override
-	public List<Cuadrilla> buscarCuadrillasPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	}	
+	
 	@Override
 	public Cuadrilla buscarCuadrillaPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = em.createQuery("select c from Cuadrilla c where c.nombre=:nomCuadrilla");
+		query.setParameter("nomCuadrilla",nombre);
+		if (query.getResultList().size()==0){
+			return null;
+		}
+		return (Cuadrilla) query.getSingleResult();
 	}
 
+///////////////////
 	@Override
 	public Camion getCamionById(Integer id) {
 		return em.find(Camion.class, id);		 
@@ -76,61 +76,76 @@ public class CollitaDAOJPA implements CollitaDAOIfc {
 
 	@Override
 	public void actualizarCamion(Camion camion) {
-		// TODO Auto-generated method stub
+		em.refresh(camion);
 
 	}
 
 	@Override
 	public void guardarCamion(Camion camion) throws CamionYaExisteException {
-		if (buscarCamionPorNombre(camion.getNombre()) != null){
+		if (buscarTermePorNombre(camion.getNombre())!=null){
 			throw new CamionYaExisteException();
 		}
+		em.getTransaction().begin();
 		em.persist(camion);
+		em.getTransaction().commit();
 	}
 
 	@Override
 	public List<Camion> recuperarCamiones(Boolean activos) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q=em.createQuery("Select c From Camion c Where c.activa=true");	
+		List<Camion> resultList = q.getResultList();
+		return resultList;
 	}
 
 	@Override
 	public Camion buscarCamionPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = em.createQuery("select c from Camion c where c.nombre=:nomCamion");
+		query.setParameter("nomCamion",nombre);
+		if (query.getResultList().size()==0){
+			return null;
+		}
+		return (Camion) query.getSingleResult();
 	}
-
+////////////Comprador/////////////////
 	@Override
 	public Comprador getCompradorById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.find(Comprador.class, id);
 	}
 
 	@Override
 	public void actualizarComprador(Comprador comprador) {
-		// TODO Auto-generated method stub
-
+		em.refresh(comprador);
 	}
 
 	@Override
 	public void guardarComprador(Comprador comprador)
 			throws CompradorYaExisteException {
-		// TODO Auto-generated method stub
+		if (buscarTermePorNombre(comprador.getNombre())!=null){
+			throw new CompradorYaExisteException();
+		}
+		em.getTransaction().begin();
+		em.persist(comprador);
+		em.getTransaction().commit();
 
 	}
 
 	@Override
 	public List<Comprador> recuperarCompradores(Boolean activos) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q=em.createQuery("Select c From Comprador c Where c.activa=true");	
+		List<Comprador> resultList = q.getResultList();
+		return resultList;
 	}
 
 	@Override
 	public Comprador buscarCompradorPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = em.createQuery("select c from Comprador c where c.nombre=:nomComprador");
+		query.setParameter("nomComprador",nombre);
+		if (query.getResultList().size()==0){
+			return null;
+		}
+		return (Comprador) query.getSingleResult();
 	}
-
+////////TERME/////////////////////////////////////////////
 	@Override
 	public Terme getTermeById(Integer id) {
 		return em.find(Terme.class, id);
@@ -166,46 +181,53 @@ public class CollitaDAOJPA implements CollitaDAOIfc {
 		}
 		return (Terme) query.getSingleResult();
 	}
-
+///////////////Variedad//////////
 	@Override
 	public Variedad getVariedadById(Integer id) {
-		return null;
+		return em.find(Variedad.class, id);
+		
 	}
 
 	@Override
 	public void actualizaVariedad(Variedad variedad) {
-		// TODO Auto-generated method stub
+		em.refresh(variedad);
 
 	}
 
 	@Override
 	public void guardarVariedad(Variedad variedad)
 			throws VariedadYaExisteException {
-		// TODO Auto-generated method stub
-
+		if (buscarTermePorNombre(variedad.getNombre())!=null){
+			throw new VariedadYaExisteException();
+		}
+		em.getTransaction().begin();
+		em.persist(variedad);
+		em.getTransaction().commit();
 	}
 
 	@Override
 	public List<Variedad> recuperarVariedades() {
-		// TODO Auto-generated method stub
-		return null;
+		return em.createQuery("select v from Variedad").getResultList();
 	}
 
 	@Override
 	public Variedad buscarVariedadPorNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = em.createQuery("select v from Variedad v where v.nombre=:nomVariedad");
+		query.setParameter("nomVariedad",nombre);
+		if (query.getResultList().size()==0){
+			return null;
+		}
+		return (Variedad) query.getSingleResult();
 	}
-
+//////////////ordencollita////////////////////////
 	@Override
 	public OrdenCollita getOrdenCollitadById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.find(OrdenCollita.class, id);	
 	}
 
 	@Override
 	public void actualizarOrdenCollita(OrdenCollita ordencollita) {
-		// TODO Auto-generated method stub
+		em.refresh(ordencollita);
 
 	}
 
@@ -217,20 +239,21 @@ public class CollitaDAOJPA implements CollitaDAOIfc {
 
 	@Override
 	public List<OrdenCollita> recuperarOrdenesCollita() {
-		// TODO Auto-generated method stub
-		return null;
+		return em.createQuery("select oc from OrdenCollita").getResultList();
 	}
 
 	@Override
 	public List<OrdenCollita> recuperarOrdenesCollita(Date fecha) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q=em.createQuery("Select o From OrdenCollita oc Where oc.fechacollita=fecha");	
+		List<OrdenCollita> resultList = q.getResultList();
+		return resultList;
 	}
 
 	@Override
 	public List<OrdenCollita> recuperarOrdenesCollita(Date desde, Date hasta) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q=em.createQuery("Select o From Ordencollita oc where oc.fechacollita >= desde AND fechacollita <= hasta");	
+		List<OrdenCollita> resultList = q.getResultList();
+		return resultList;
 	}
 
 	@Override
@@ -250,5 +273,7 @@ public class CollitaDAOJPA implements CollitaDAOIfc {
 		}
 	//	   collitaDAOJPA.recuperarCuadrillas(true);
 	}
+
+
 
 }
