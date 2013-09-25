@@ -73,7 +73,7 @@ public interface CollitaDAOIfc {
 
 	public abstract Variedad buscarVariedadPorNombre(String nombre);
 
-	public abstract OrdenCollita getOrdenCollitadById(Integer id);
+	public abstract OrdenCollita getOrdenCollitaById(Integer id);
 
 	public abstract void actualizarOrdenCollita(OrdenCollita ordencollita);
 
@@ -85,6 +85,6 @@ public interface CollitaDAOIfc {
 
 	public List<OrdenCollita> recuperarOrdenesCollita(Date desde, Date hasta);
 
-	void borraOrdenCollita(OrdenCollita ordencollita);
+	public void borraOrdenCollita(OrdenCollita ordencollita);
 
 }
