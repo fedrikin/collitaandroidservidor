@@ -180,7 +180,7 @@ public class CollitaDAOJPA implements CollitaDAOIfc {
 
 	@Override
 	public List<Terme> recuperarTermes() {
-		return em.createQuery("select t from Terme").getResultList();
+		return em.createQuery("select t from Terme t").getResultList();
 	}
 
 	@Override
@@ -254,13 +254,13 @@ public class CollitaDAOJPA implements CollitaDAOIfc {
 
 	@Override
 	public List<OrdenCollita> recuperarOrdenesCollita() {
-		return em.createQuery("select oc from OrdenCollita").getResultList();
+		return em.createQuery("select o from OrdenCollita o").getResultList();
 	}
 
 	@Override
 	public List<OrdenCollita> recuperarOrdenesCollita(Date fecha) {
-		Query q = em
-				.createQuery("Select o From OrdenCollita oc Where oc.fechacollita=fecha");
+		Query q = em.createQuery("Select oc From OrdenCollita oc Where oc.fechaCollita=:fecha");
+		q.setParameter("fecha", fecha);
 		List<OrdenCollita> resultList = q.getResultList();
 		return resultList;
 	}
@@ -268,7 +268,7 @@ public class CollitaDAOJPA implements CollitaDAOIfc {
 	@Override
 	public List<OrdenCollita> recuperarOrdenesCollita(Date desde, Date hasta) {
 		Query q = em
-				.createQuery("Select o From Ordencollita oc where oc.fechacollita >= desde AND fechacollita <= hasta");
+				.createQuery("Select oc From Ordencollita oc where oc.fechaCollita >= :desde AND oc.fechaCollita <= :hasta");
 		List<OrdenCollita> resultList = q.getResultList();
 		return resultList;
 	}
@@ -280,15 +280,15 @@ public class CollitaDAOJPA implements CollitaDAOIfc {
 
 	public static void main(String[] args) {
 		CollitaDAOJPA collitaDAOJPA = new CollitaDAOJPA();
-		Terme t = new Terme();
-		t.setNombre("Mislata");
-		t.setPrecioKilo(0.09d);
-		try {
-			collitaDAOJPA.guardarTerme(t);
-		} catch (TermeYaExisteException e) {
-			e.printStackTrace();
-		}
-		// collitaDAOJPA.recuperarCuadrillas(true);
+//		Terme t = new Terme();
+//		t.setNombre("Mislata");
+//		t.setPrecioKilo(0.09d);
+//		try {
+//			collitaDAOJPA.guardarTerme(t);
+//		} catch (TermeYaExisteException e) {
+//			e.printStackTrace();
+//		}
+		collitaDAOJPA.recuperarTermes();
 	}
 
 }
